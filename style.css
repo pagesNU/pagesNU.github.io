@@ -8,8 +8,9 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background-image: url(img/textured_paper_%402X.png);
+  /* background-image: url(img/textured_paper_%402X.png); */
   background-blend-mode: multiply;
+  background-color: #79ab53;
   background-repeat: repeat;
   background-size: 800px;
 }
@@ -33,7 +34,7 @@ h1 {
 }
 
 #timer {
-  color: #F6F4F3;
+  color: #ffffff;
   text-align: center;
   text-transform: uppercase;
   font-family: "Lato", sans-serif;
