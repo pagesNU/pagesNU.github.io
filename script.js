@@ -1,5 +1,5 @@
 const year = new Date().getFullYear();
-const eventDate = new Date(year, 5,22).getTime();
+const eventDate = new Date(year, 10,20).getTime();
 const nextEventDate = new Date(year + 1, 6, 4).getTime();
 const month = new Date().getMonth();
 
