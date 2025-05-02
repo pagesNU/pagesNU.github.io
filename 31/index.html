@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>31 Reasons why I love you</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", "Cursive";
+            background: url(Background2.jpg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgb(253, 230, 206);
+            font-family: "Comic Sans MS", "Cursive";
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(228, 201, 29, 0.1);
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-family: "Comic Sans MS", "Cursive";
+            margin: 10px 0;
+            width: 90%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            font-family: "Comic Sans MS", "Cursive";
+            width: 100%;
+            background-color: #f0aaaa;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Input the code here</h1>
+        <input type="number" id="codeInput" placeholder="Enter numeric code">
+        <button onclick="convertCode()">Get Reason</button>
+        <div class="output" id="output"></div>
+    </div>
+    <script>
+        function convertCode() {
+            const code = document.getElementById('codeInput').value;
+            const outputElement = document.getElementById('output');
+            
+            // Define your code-to-string mapping here
+            const codeToString = {
+                11174: "Support: You are always there to support my delulu ideas",
+                73917: "Laughter: It brightens up my day day",
+                32608: "Thoughtful Gestures: Even the smallest acts of kindness show how much you care",
+                39644: "Make Me Feel Safe: Being with you is like coming home.",
+                54523: "Life: Your enthusiasm is contagious",
+                73403: "Creativity: You're always brimming with new creative ideas",
+                94501: "Kindness: You're always willing to help others",
+                97148: "Sense of Humor: You know how to make me laugh, even on my down days",
+                73069: "Loyalty: You're always there for me, no matter what",
+                94376: "Love of Adventure: You're always up for trying new things",
+                48396: "Ability to Listen: You always make me feel heard and understood",
+                63464: "Strong Work Ethic: You're always striving for your best",
+                54473: "Positive Outlook: You always see the bright side of things",
+                75340: "Ability to Forgive: You're always willing to let go of the past",
+                87207: "Love of Family: You're always there for your family",
+                58308: "Love of Friends: You're always there for your friends",
+                39522: "Make Me Feel Special: You always make me feel loved and appreciated",
+                85857: "Food: We always have fun exploring new restaurants or enjoying our love TBN ",
+                82163: "Music: You're always sharing your favorite songs with me",
+                66654: "Nature: I love that we share the same ideas of exploring nature",
+                99592: "Travel: I having a blast planning honeymoon with you and that excites me for our future travels",
+                10155: "Learning: You're always trying to learn new things.",
+                99408: "Helping Others: You're always looking for ways to make a difference, like the inspire trip and i am so proud of you",
+                60294: "Affection: Your ability to make me feel like the luckiest person in the world",
+                28164: "Patience: Your incredible patience and understanding",
+                31297: "Cheerleader: Your constant encouragement and support",
+                90815: "Commitment: Your unwavering commitment to our relationship.",
+                66861: "Leadership: I admire how YOU takes charge and inspires others",
+                67459: "Love of Me: You're my best friend, my soulmate, and the love of my life",
+                55304: "Love of Our Future: We're excited to build a life together",
+                25475: "Love of Our Love: Our love is the greatest gift we could ever ask for"
+            };
+            
+            const outputString = codeToString[code] || "Code not found!";
+            outputElement.textContent = outputString;
+        }
+    </script>
+</body>
+</html>

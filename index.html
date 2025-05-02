@@ -3,105 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>31 Reasons why I love you</title>
+    <title>A Very Special Surprise!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Apply Inter font globally */
         body {
-            font-family: "Comic Sans MS", "Cursive";
-            background: url(Background2.jpg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+            font-family: 'Dongle', sans-serif;
+            overflow: hidden; /* Prevent scrollbars from brief appearance */
         }
-        .container {
-            background-color: rgb(253, 230, 206);
-            font-family: "Comic Sans MS", "Cursive";
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(228, 201, 29, 0.1);
+        /* Enhanced transitions */
+        .transition-smooth {
+            transition: opacity 0.6s ease-in-out, transform 0.4s ease-in-out, box-shadow 0.3s ease;
         }
-        input[type="number"] {
-            padding: 10px;
-            font-family: "Comic Sans MS", "Cursive";
-            margin: 10px 0;
-            width: 90%;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
+        /* Shake animation for incorrect password */
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-6px); }
+          50% { transform: translateX(6px); }
+          75% { transform: translateX(-6px); }
         }
-        button {
-            padding: 10px;
-            font-family: "Comic Sans MS", "Cursive";
+        .shake-animation {
+            animation: shake 0.35s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        /* Subtle bobbing animation for the closed box */
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        #closed-box {
+            animation: bob 2s ease-in-out infinite;
+        }
+
+        /* Style for the surprise reveal */
+        #surprise-content {
+             transform: scale(0.9); /* Start slightly smaller */
+             transition: opacity 0.7s ease-out, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Add scale transition */
+        }
+         #surprise-content.revealed {
+            opacity: 1;
+            transform: scale(1); /* Scale to normal size */
+        }
+
+         /* Fancy Button Hover/Focus */
+         #submit-button {
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+         }
+         #submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+         }
+         #submit-button:active {
+            transform: translateY(0px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+         }
+
+         /* Fancy Input Focus */
+         #password-input:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4); /* Indigo focus ring */
+         }
+
+         /* Confetti styles (Optional - requires JS to add/remove) */
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            background-color: #f0aaaa;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
         }
-        button:hover {
-            background-color: #0056b3;
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 16px;
+            background-color: #f00; /* Example color */
+            opacity: 0.7;
+            animation: fall 5s linear infinite;
         }
-        .output {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
+
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Input the code here</h1>
-        <input type="number" id="codeInput" placeholder="Enter numeric code">
-        <button onclick="convertCode()">Get Reason</button>
-        <div class="output" id="output"></div>
+<body class="bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center min-h-screen px-4">
+    <div id="confetti-container" class="confetti-container"></div>
+
+    <div id="gift-container" class="bg-white p-8 md:p-10 rounded-xl shadow-2xl text-center max-w-md w-full transition-smooth relative overflow-hidden">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">GSAD Surprise!</h1>
+
+        <div id="closed-box" class="transition-smooth mb-8">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-36 w-36 mx-auto text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                {/* */}
+                <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8" fill="#DC2626"/> {/* Fill base red */}
+                <path d="M4 12h16" stroke="#B91C1C" stroke-width="1"/> {/* Line across middle */}
+                {/* */}
+                <path d="M4 12l2-4h12l2 4" fill="#EF4444"/> {/* Fill lid lighter red */}
+                <path d="M4 12l2-4h12l2 4" stroke="#DC2626"/> {/* Lid outline */}
+                {/* */}
+                <path d="M12 2v10" stroke="#FBBF24" stroke-width="2"/> {/* Vertical ribbon */}
+                <path d="M12 2a4 4 0 1 0 0-4 4 4 0 0 0 0 4z" fill="#FBBF24" transform="translate(0 2) scale(0.8)"/> {/* Bow knot */}
+                <path d="M10 4 C 8 6, 8 8, 10 10" stroke="#FBBF24" stroke-width="2" fill="none"/> {/* Left Bow Loop */}
+                <path d="M14 4 C 16 6, 16 8, 14 10" stroke="#FBBF24" stroke-width="2" fill="none"/> {/* Right Bow Loop */}
+             </svg>
+        </div>
+
+        <div id="surprise-content" class="hidden opacity-0 transition-smooth">
+             <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white p-6 rounded-lg shadow-lg mb-6 text-center">
+                <p class="font-bold text-2xl mb-2">SURPRISE!</p>
+                <p class="text-xl">You've unlocked the gift! 🥳🎁</p>
+                <p class="font-bold text-2xl mb-2">Oura Ring 4</p>
+                <a class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="https://ouraring.com/product/rings/oura-ring-4/silver">Visit Oura!</a>
+            </div>
+        </div>
+
+        <div id="input-area">
+            <p class="mb-4 text-gray-700">Enter the secret password to open:</p>
+            <div class="flex justify-center items-center shadow-sm rounded-md">
+                <label for="password-input" class="sr-only">Password</label>
+                <input type="password" id="password-input" placeholder="Secret Code" class="border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-0 focus:border-indigo-500 flex-grow max-w-xs transition-smooth text-gray-700">
+                <button id="submit-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Unlock
+                </button>
+            </div>
+            <p id="message-area" class="mt-4 text-sm h-5 font-medium"></p>
+         </div>
+
     </div>
+
     <script>
-        function convertCode() {
-            const code = document.getElementById('codeInput').value;
-            const outputElement = document.getElementById('output');
-            
-            // Define your code-to-string mapping here
-            const codeToString = {
-                11174: "Support: You are always there to support my delulu ideas",
-                73917: "Laughter: It brightens up my day day",
-                32608: "Thoughtful Gestures: Even the smallest acts of kindness show how much you care",
-                39644: "Make Me Feel Safe: Being with you is like coming home.",
-                54523: "Life: Your enthusiasm is contagious",
-                73403: "Creativity: You're always brimming with new creative ideas",
-                94501: "Kindness: You're always willing to help others",
-                97148: "Sense of Humor: You know how to make me laugh, even on my down days",
-                73069: "Loyalty: You're always there for me, no matter what",
-                94376: "Love of Adventure: You're always up for trying new things",
-                48396: "Ability to Listen: You always make me feel heard and understood",
-                63464: "Strong Work Ethic: You're always striving for your best",
-                54473: "Positive Outlook: You always see the bright side of things",
-                75340: "Ability to Forgive: You're always willing to let go of the past",
-                87207: "Love of Family: You're always there for your family",
-                58308: "Love of Friends: You're always there for your friends",
-                39522: "Make Me Feel Special: You always make me feel loved and appreciated",
-                85857: "Food: We always have fun exploring new restaurants or enjoying our love TBN ",
-                82163: "Music: You're always sharing your favorite songs with me",
-                66654: "Nature: I love that we share the same ideas of exploring nature",
-                99592: "Travel: I having a blast planning honeymoon with you and that excites me for our future travels",
-                10155: "Learning: You're always trying to learn new things.",
-                99408: "Helping Others: You're always looking for ways to make a difference, like the inspire trip and i am so proud of you",
-                60294: "Affection: Your ability to make me feel like the luckiest person in the world",
-                28164: "Patience: Your incredible patience and understanding",
-                31297: "Cheerleader: Your constant encouragement and support",
-                90815: "Commitment: Your unwavering commitment to our relationship.",
-                66861: "Leadership: I admire how YOU takes charge and inspires others",
-                67459: "Love of Me: You're my best friend, my soulmate, and the love of my life",
-                55304: "Love of Our Future: We're excited to build a life together",
-                25475: "Love of Our Love: Our love is the greatest gift we could ever ask for"
-            };
-            
-            const outputString = codeToString[code] || "Code not found!";
-            outputElement.textContent = outputString;
+        // --- Configuration ---
+        const correctPassword = "NehaGSAD25"; // !! CHANGE THIS !!
+        // ---------------------
+
+        // Get DOM elements
+        const passwordInput = document.getElementById('password-input');
+        const submitButton = document.getElementById('submit-button');
+        const messageArea = document.getElementById('message-area');
+        const closedBox = document.getElementById('closed-box');
+        const surpriseContent = document.getElementById('surprise-content');
+        const inputArea = document.getElementById('input-area');
+        const giftContainer = document.getElementById('gift-container');
+        const confettiContainer = document.getElementById('confetti-container'); // Get confetti container
+
+        // Function to create confetti pieces
+        function createConfetti() {
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800'];
+            for (let i = 0; i < 50; i++) { // Create 50 pieces
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw'; // Start across the width
+                confetti.style.top = -Math.random() * 50 + 'vh'; // Start above the screen
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 2 + 's'; // Random delay
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.width = (Math.random() * 6 + 6) + 'px'; // Random size
+                confetti.style.height = (Math.random() * 10 + 10) + 'px'; // Random size
+                confettiContainer.appendChild(confetti);
+
+                // Remove confetti after animation ends
+                 setTimeout(() => {
+                    confetti.remove();
+                }, 5500); // Slightly longer than animation duration
+            }
         }
+
+
+        // Add event listener to the submit button
+        submitButton.addEventListener('click', () => {
+            const enteredPassword = passwordInput.value;
+
+            // Clear previous messages and animations
+            messageArea.textContent = '';
+            giftContainer.classList.remove('shake-animation');
+            messageArea.classList.remove('text-red-600', 'text-green-600'); // Clear color classes
+
+            // Check if the password is correct
+            if (enteredPassword === correctPassword) {
+                // Correct password: Open the box!
+                messageArea.textContent = 'Correct! Unlocking...';
+                messageArea.classList.add('text-green-600');
+
+                // 1. Fade out the closed box and input area
+                closedBox.style.opacity = '0';
+                inputArea.style.opacity = '0';
+                closedBox.style.transform = 'scale(0.8)'; // Optional: shrink effect
+                inputArea.style.transform = 'translateY(20px)'; // Optional: slide down effect
+
+                // 2. After the fade-out transition, hide them and fade in the surprise
+                setTimeout(() => {
+                    closedBox.classList.add('hidden');
+                    inputArea.classList.add('hidden');
+
+                    // Make surprise content visible and trigger its transition
+                    surpriseContent.classList.remove('hidden');
+                    requestAnimationFrame(() => { // Ensure 'hidden' is removed
+                         requestAnimationFrame(() => { // Ensure styles are applied
+                            surpriseContent.classList.add('revealed'); // Add class to trigger transition
+                         });
+                    });
+
+
+                    // Trigger confetti!
+                    createConfetti();
+
+                    // Optional: Clear success message after a few seconds
+                    setTimeout(() => {
+                         messageArea.textContent = '';
+                    }, 3500);
+
+                }, 600); // Match timeout duration with CSS transition duration
+
+                // Disable input and button
+                passwordInput.disabled = true;
+                submitButton.disabled = true;
+                submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+                passwordInput.classList.add('opacity-50');
+
+
+            } else {
+                // Incorrect password
+                messageArea.textContent = 'Incorrect password. Try again!';
+                messageArea.classList.add('text-red-600');
+                passwordInput.value = ''; // Clear the input field
+                passwordInput.focus(); // Set focus back to input
+
+                // Add shake animation to the container
+                giftContainer.classList.add('shake-animation');
+                // Remove the class after the animation finishes
+                setTimeout(() => {
+                    giftContainer.classList.remove('shake-animation');
+                }, 350); // Match timeout with animation duration
+            }
+        });
+
+        // Optional: Allow pressing Enter key to submit
+        passwordInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                submitButton.click();
+            }
+        });
+
     </script>
+
 </body>
 </html>
