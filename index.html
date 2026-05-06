@@ -1,258 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Very Special Surprise!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Apply Inter font globally */
-        body {
-            font-family: 'Dongle', sans-serif;
-            overflow: hidden; /* Prevent scrollbars from brief appearance */
-        }
-        /* Enhanced transitions */
-        .transition-smooth {
-            transition: opacity 0.6s ease-in-out, transform 0.4s ease-in-out, box-shadow 0.3s ease;
-        }
-        /* Shake animation for incorrect password */
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-6px); }
-          50% { transform: translateX(6px); }
-          75% { transform: translateX(-6px); }
-        }
-        .shake-animation {
-            animation: shake 0.35s cubic-bezier(.36,.07,.19,.97) both;
-        }
-        /* Subtle bobbing animation for the closed box */
-        @keyframes bob {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        #closed-box {
-            animation: bob 2s ease-in-out infinite;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy First Mother's Day, Neha!</title>
+<!-- Google Fonts for "Fancy" typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary-pink: #FFC0CB; /* Pink */
+        --dark-pink: #D87093;   /* PaleVioletRed */
+        --bg-lavender: #FFF0F5;  /* LavenderBlush */
+        --text-color: #5A3D5C;
+        --glass: rgba(255, 255, 255, 0.7);
+    }
 
-        /* Style for the surprise reveal */
-        #surprise-content {
-             transform: scale(0.9); /* Start slightly smaller */
-             transition: opacity 0.7s ease-out, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Add scale transition */
-        }
-         #surprise-content.revealed {
-            opacity: 1;
-            transform: scale(1); /* Scale to normal size */
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-         /* Fancy Button Hover/Focus */
-         #submit-button {
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-         }
-         #submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-         }
-         #submit-button:active {
-            transform: translateY(0px);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-         }
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: var(--bg-lavender);
+        /* Subtle pattern background for "cute" */
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmU0ZTEiIGZpbGwtb3BhY2l0eT0iMC42Ij48cGF0aCBkPSJNMCAwaDR2NEgwVjB6bTQgNGg0djRIMFY0em00IDRoNHY0SDhWOHptNCA0aDR2NEgxMlYxMnptNCA0aDR2NEgxNlYxNnpNMjAgMDBoNHY0aC00VjB6bTQgNGg0djRIMjRWNHptNCA0aDR2NEgyOFY4em00IDRoNHY0SDMyVjEyek0wIDIwaDR2NEgwdi00em00IDRoNHY0SDR2LTR6bTQgNGg0djRIdHYtNHptNCA0aDR2NEgxMnYtNHptMTIgMDBoNHY0aC00di00em00IDRoNHY0SDI0di00em00IDRoNHY0SDI4di00em00IDRoNHY0SDMydi00eiIvPjwvZz48L2c+PC9zdmc+');
+        font-family: 'Poppins', sans-serif;
+        color: var(--text-color);
+        overflow: hidden; /* For confetti */
+    }
 
-         /* Fancy Input Focus */
-         #password-input:focus {
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4); /* Indigo focus ring */
-         }
+    /* Confetti container */
+    #confetti-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
 
-         /* Confetti styles (Optional - requires JS to add/remove) */
-        .confetti-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 10;
-        }
-        .confetti {
-            position: absolute;
-            width: 8px;
-            height: 16px;
-            background-color: #f00; /* Example color */
-            opacity: 0.7;
-            animation: fall 5s linear infinite;
-        }
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
+    .container {
+        position: relative;
+        width: 90%;
+        max-width: 600px;
+        background: var(--glass);
+        backdrop-filter: blur(10px); /* Modern Glassmorphism */
+        -webkit-backdrop-filter: blur(10px);
+        padding: 50px 40px;
+        border-radius: 30px;
+        box-shadow: 0 15px 35px rgba(216, 112, 147, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        text-align: center;
+        z-index: 10;
+        animation: cardAppear 1s ease-out;
+    }
 
-    </style>
+    @keyframes cardAppear {
+        0% { opacity: 0; transform: translateY(30px) scale(0.9); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    h1 {
+        font-family: 'Dancing Script', cursive; /* Fancy font */
+        color: var(--dark-pink);
+        font-size: 3.5rem;
+        margin: 0;
+        line-height: 1;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .first-mothers-day {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #888;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-top: -5px;
+        margin-bottom: 20px;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        color: #777;
+        margin-bottom: 40px;
+        font-weight: 300;
+    }
+
+    .affirmation-display {
+        background-color: white;
+        padding: 40px;
+        border-radius: 20px;
+        border: 2px solid #FFE4E1;
+        min-height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 40px;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease;
+    }
+
+    .affirmation-display:hover {
+        transform: scale(1.02);
+    }
+
+    .affirmation-text {
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 1.6;
+        color: var(--text-color);
+    }
+
+    button {
+        background: linear-gradient(135deg, var(--primary-pink) 0%, #FFA07A 100%);
+        color: white;
+        border: none;
+        padding: 18px 35px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(255, 160, 122, 0.3);
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    button:hover {
+        box-shadow: 0 15px 25px rgba(255, 160, 122, 0.4);
+        transform: translateY(-3px);
+    }
+
+    button:active {
+        transform: translateY(1px) scale(0.98);
+        box-shadow: 0 5px 10px rgba(255, 160, 122, 0.4);
+    }
+
+    .bottom-decor {
+        font-size: 2.2rem;
+        margin-top: 40px;
+        opacity: 0.8;
+    }
+    
+    .sparkle {
+        display: inline-block;
+        animation: sparkleAnimation 1.5s infinite;
+    }
+    
+    @keyframes sparkleAnimation {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.1); }
+    }
+
+    /* Fancy Typing cursor */
+    .typed-cursor {
+        opacity: 1;
+        animation: blink 0.7s infinite;
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 500px) {
+        h1 { font-size: 2.5rem; }
+        .affirmation-text { font-size: 1.1rem; }
+        .container { padding: 30px 20px; }
+    }
+</style>
 </head>
-<body class="bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center min-h-screen px-4">
-    <div id="confetti-container" class="confetti-container"></div>
+<body>
 
-    <div id="gift-container" class="bg-white p-8 md:p-10 rounded-xl shadow-2xl text-center max-w-md w-full transition-smooth relative overflow-hidden">
-        <h1 class="text-3xl font-bold mb-6 text-gray-800">Surprise!!</h1>
+<!-- This holds the falling hearts/confetti -->
+<div id="confetti-container"></div>
 
-        <div id="closed-box" class="transition-smooth mb-8">
-             <svg xmlns="http://www.w3.org/2000/svg" class="h-36 w-36 mx-auto text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                {/* */}
-                <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8" fill="#DC2626"/> {/* Fill base red */}
-                <path d="M4 12h16" stroke="#B91C1C" stroke-width="1"/> {/* Line across middle */}
-                {/* */}
-                <path d="M4 12l2-4h12l2 4" fill="#EF4444"/> {/* Fill lid lighter red */}
-                <path d="M4 12l2-4h12l2 4" stroke="#DC2626"/> {/* Lid outline */}
-                {/* */}
-                <path d="M12 2v10" stroke="#FBBF24" stroke-width="2"/> {/* Vertical ribbon */}
-                <path d="M12 2a4 4 0 1 0 0-4 4 4 0 0 0 0 4z" fill="#FBBF24" transform="translate(0 2) scale(0.8)"/> {/* Bow knot */}
-                <path d="M10 4 C 8 6, 8 8, 10 10" stroke="#FBBF24" stroke-width="2" fill="none"/> {/* Left Bow Loop */}
-                <path d="M14 4 C 16 6, 16 8, 14 10" stroke="#FBBF24" stroke-width="2" fill="none"/> {/* Right Bow Loop */}
-             </svg>
-        </div>
+<div class="container">
+    <div class="top-sparkle sparkle">✨</div>
+    
+    <h1>Happy Mother's Day!</h1>
+    <div class="first-mothers-day">Neha</div>
+    
+    <p class="subtitle">Tap the button below for a sweet reminder of how much Ezan and I love you.</p>
 
-        <div id="surprise-content" class="hidden opacity-0 transition-smooth">
-             <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white p-6 rounded-lg shadow-lg mb-6 text-center">
-                <p class="font-bold text-2xl mb-2">SURPRISE!</p>
-                <p class="text-xl">You've unlocked the gift! 🥳🎁</p>
-                <p class="font-bold text-2xl mb-2">Oura Ring 4</p>
-                <a class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="https://ouraring.com/product/rings/oura-ring-4/silver">Visit Oura!</a>
-            </div>
-        </div>
-
-        <div id="input-area">
-            <p class="mb-4 text-gray-700">Enter the secret password to open:</p>
-            <div class="flex justify-center items-center shadow-sm rounded-md">
-                <label for="password-input" class="sr-only">Password</label>
-                <input type="password" id="password-input" placeholder="Secret Code" class="border border-gray-300 rounded-l-md px-4 py-2 focus:outline-none focus:ring-0 focus:border-indigo-500 flex-grow max-w-xs transition-smooth text-gray-700">
-                <button id="submit-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Unlock
-                </button>
-            </div>
-            <p id="message-area" class="mt-4 text-sm h-5 font-medium"></p>
-         </div>
-
+    <div class="affirmation-display">
+        <!-- New advanced: Text types out dynamically -->
+        <div class="affirmation-text" id="text">Tap the button! <span class="sparkle">💖</span></div>
     </div>
 
-    <script>
-        // --- Configuration ---
-        const correctPassword = "GiftALXN25"; // !! CHANGE THIS !!
-        // ---------------------
+    <!-- Fancy button with shine effect on hover -->
+    <button onclick="newAffirmation()" id="loveButton">Click for some love ✨</button>
 
-        // Get DOM elements
-        const passwordInput = document.getElementById('password-input');
-        const submitButton = document.getElementById('submit-button');
-        const messageArea = document.getElementById('message-area');
-        const closedBox = document.getElementById('closed-box');
-        const surpriseContent = document.getElementById('surprise-content');
-        const inputArea = document.getElementById('input-area');
-        const giftContainer = document.getElementById('gift-container');
-        const confettiContainer = document.getElementById('confetti-container'); // Get confetti container
+    <div class="bottom-decor">
+        🍼 &nbsp; 🧸 &nbsp; 🌷
+    </div>
+</div>
 
-        // Function to create confetti pieces
-        function createConfetti() {
-            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800'];
-            for (let i = 0; i < 50; i++) { // Create 50 pieces
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.left = Math.random() * 100 + 'vw'; // Start across the width
-                confetti.style.top = -Math.random() * 50 + 'vh'; // Start above the screen
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 2 + 's'; // Random delay
-                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                confetti.style.width = (Math.random() * 6 + 6) + 'px'; // Random size
-                confetti.style.height = (Math.random() * 10 + 10) + 'px'; // Random size
-                confettiContainer.appendChild(confetti);
+<script>
+    // Keeping your personalized mix of affirmations exactly as they were
+    const affirmations = [
+        "Every time Ezan looks up at you, I can see how completely safe and loved he feels.",
+        "Meri jaan, you are the heart of our family. Ezan and I are so lucky to have you.",
+        "You deserve all the sleep in the world, plus an endless supply of Thai Food!",
+        "Seeing the way you nurture Ezan during these precious early months makes me so incredibly proud.",
+        "I promise to always keep the Domino's pan pizza coming, especially on the days you need a break the most.",
+        "Thank you for being such an amazing partner and the most wonderful mother.",
+        "Even when we're exhausted and just trying to figure out this parenting thing, there's no one else I'd rather be doing it with.",
+        "Ezan has only been with us for a little while, but you've already given him a lifetime of love.",
+        "Thanks for tracking everthing from his sleep to his poops, and for being the most attentive and loving mom.",
+        "I know these early days are tough, but you're doing an incredible job. Ezan and I are so grateful for you every single day.",
+    ];
 
-                // Remove confetti after animation ends
-                 setTimeout(() => {
-                    confetti.remove();
-                }, 5500); // Slightly longer than animation duration
+    let lastIndex = -1;
+    let isTyping = false; // Prevent overlapping clicks
+
+    function newAffirmation() {
+        if (isTyping) return; // Wait until current text finishes
+
+        const textElement = document.getElementById('text');
+        
+        // Find new index
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * affirmations.length);
+        } while (randomIndex === lastIndex && affirmations.length > 1);
+        lastIndex = randomIndex;
+        const fullText = affirmations[randomIndex];
+
+        // Advanced: Trigger heart confetti celebration!
+        celebrate();
+        
+        // Fancy: Typewriter effect
+        typeWriter(textElement, fullText);
+    }
+
+    // Advanced typing effect function
+    function typeWriter(element, text) {
+        isTyping = true;
+        element.innerHTML = ""; // Clear existing text
+        
+        // Change button text temporarily
+        document.getElementById('loveButton').innerText = "Sending love... 💖";
+        
+        let i = 0;
+        const speed = 40; // Speed of typing in ms
+
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            } else {
+                // Once typing finishes
+                isTyping = false;
+                // Fancy: Add a subtle heart at the end of every message
+                element.innerHTML += " ❤️";
+                document.getElementById('loveButton').innerText = "Tap for more love! ✨";
             }
         }
+        type();
+    }
 
+    // Advanced: Pure JS heart confetti effect
+    function celebrate() {
+        const container = document.getElementById('confetti-container');
+        
+        // Colors for cute confetti
+        const colors = ['#FFC0CB', '#FFB6C1', '#D87093', '#FFF']; 
 
-        // Add event listener to the submit button
-        submitButton.addEventListener('click', () => {
-            const enteredPassword = passwordInput.value;
-
-            // Clear previous messages and animations
-            messageArea.textContent = '';
-            giftContainer.classList.remove('shake-animation');
-            messageArea.classList.remove('text-red-600', 'text-green-600'); // Clear color classes
-
-            // Check if the password is correct
-            if (enteredPassword === correctPassword) {
-                // Correct password: Open the box!
-                messageArea.textContent = 'Correct! Unlocking...';
-                messageArea.classList.add('text-green-600');
-
-                // 1. Fade out the closed box and input area
-                closedBox.style.opacity = '0';
-                inputArea.style.opacity = '0';
-                closedBox.style.transform = 'scale(0.8)'; // Optional: shrink effect
-                inputArea.style.transform = 'translateY(20px)'; // Optional: slide down effect
-
-                // 2. After the fade-out transition, hide them and fade in the surprise
-                setTimeout(() => {
-                    closedBox.classList.add('hidden');
-                    inputArea.classList.add('hidden');
-
-                    // Make surprise content visible and trigger its transition
-                    surpriseContent.classList.remove('hidden');
-                    requestAnimationFrame(() => { // Ensure 'hidden' is removed
-                         requestAnimationFrame(() => { // Ensure styles are applied
-                            surpriseContent.classList.add('revealed'); // Add class to trigger transition
-                         });
-                    });
-
-
-                    // Trigger confetti!
-                    createConfetti();
-
-                    // Optional: Clear success message after a few seconds
-                    setTimeout(() => {
-                         messageArea.textContent = '';
-                    }, 3500);
-
-                }, 600); // Match timeout duration with CSS transition duration
-
-                // Disable input and button
-                passwordInput.disabled = true;
-                submitButton.disabled = true;
-                submitButton.classList.add('opacity-50', 'cursor-not-allowed');
-                passwordInput.classList.add('opacity-50');
-
-
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            
+            // Random choice between a circle particle and a heart emoji for "cute"
+            if (Math.random() > 0.5) {
+                 heart.innerHTML = '❤️';
             } else {
-                // Incorrect password
-                messageArea.textContent = 'Incorrect password. Try again!';
-                messageArea.classList.add('text-red-600');
-                passwordInput.value = ''; // Clear the input field
-                passwordInput.focus(); // Set focus back to input
-
-                // Add shake animation to the container
-                giftContainer.classList.add('shake-animation');
-                // Remove the class after the animation finishes
+                 heart.innerHTML = '✨';
+            }
+           
+            heart.style.position = 'absolute';
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            
+            // Random start position (scattered around the container)
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '-5vh';
+            
+            // Random fall animation
+            heart.style.transition = `transform ${Math.random() * 2 + 2}s linear, opacity ${Math.random() * 2 + 2}s linear`;
+            
+            container.appendChild(heart);
+            
+            // Trigger animation after append
+            requestAnimationFrame(() => {
+                const fallDuration = Math.random() * 2000 + 1500;
+                
+                heart.style.transform = `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
+                heart.style.opacity = '0';
+                
+                // Remove heart from DOM after it falls
                 setTimeout(() => {
-                    giftContainer.classList.remove('shake-animation');
-                }, 350); // Match timeout with animation duration
-            }
-        });
-
-        // Optional: Allow pressing Enter key to submit
-        passwordInput.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                submitButton.click();
-            }
-        });
-
-    </script>
+                    heart.remove();
+                }, fallDuration + 1000);
+            });
+        }
+    }
+</script>
 
 </body>
 </html>
